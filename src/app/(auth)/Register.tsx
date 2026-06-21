@@ -5,56 +5,53 @@ import PrimaryButton from '@/components/Button/PrimaryButton'
 import { useAuth } from '@/context/AuthProvider'
 
 const RegisterScreen = () => {
-  const[name,setName]=useState('')
-  const[email,setEmail]=useState('')
-  const[password,setPassword]=useState('')
-  const[confirmPassword,setConfirmPassword]=useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
- const{signUp}=useAuth();
+  const { signUp } = useAuth();
 
   const handleRegister = async () => {
-  if (!name || !email || !password || !confirmPassword) {
-    Alert.alert('Please fill all fields');
-    return;
+    if (!name || !email || !password || !confirmPassword) {
+      Alert.alert("Please enter the complete register details")
+      return;
+    }
+    if(password!==confirmPassword){
+      Alert.alert("Passwords do not match")
+      return;
+    }
+    try {
+      await signUp(email, password)
+      alert("Success,Account created")
+    } catch (error: any) {
+      Alert.alert("Registration Failed",error.message)
+    }
   }
-
-  if (password !== confirmPassword) {
-    Alert.alert('Passwords do not match');
-    return;
-  }
-   try{
-        await signUp(email,password)
-        alert("Account is created,You can login")
-   } catch(error:any){
-      alert(error.message)
-   }
-
-
-};
 
   return (
     <View style={styles.container}>
       <InputField
-       placeholder='Enter your name'
-       value={name}
-       onChangeText={setName}
+        placeholder='Enter your name'
+        value={name}
+        onChangeText={setName}
       />
       <InputField
-       placeholder='Enter your email'
-       value={email}
-       onChangeText={setEmail}
+        placeholder='Enter your email'
+        value={email}
+        onChangeText={setEmail}
       />
       <InputField
-       placeholder='Enter your password'
-       value={password}
-       onChangeText={setPassword}
-       secureTextEntry
+        placeholder='Enter your password'
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
       />
       <InputField
-       placeholder='Confirm your password'
-       value={confirmPassword}
-       onChangeText={setConfirmPassword}
-       secureTextEntry
+        placeholder='Confirm your password'
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
       />
       <PrimaryButton
         title="Register"
@@ -67,7 +64,7 @@ const RegisterScreen = () => {
 export default RegisterScreen
 
 const styles = StyleSheet.create({
-  container:{
-    gap:12
+  container: {
+    gap: 12
   }
 })

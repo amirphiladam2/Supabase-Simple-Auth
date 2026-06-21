@@ -18,7 +18,6 @@ const AuthScreen = () => {
           <Text style={styles.LinkText}>{isLogin ? "Register" : "Login"}</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   )
 }
